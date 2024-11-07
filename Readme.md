@@ -30,7 +30,7 @@ This is a Flask application that fetches historical weather data for a specified
 
 3. **Set up Redis**:
     - Ensure you have a running Redis instance or configure access to a Redis server.
-    - Set the Redis connection details (host and password) in a `.env` file (see [Configuration](#configuration)).
+    - Set the Redis connection details (host and password) in a `.env` file.
 
 4. **Set up the Weather API**:
     - Obtain an API key from [Visual Crossing Weather](https://www.visualcrossing.com/) and add it to the `.env` file.
@@ -39,10 +39,11 @@ This is a Flask application that fetches historical weather data for a specified
 
 Create a `.env` file in the root directory with the following variables:
 
-```plaintext
+```
 REDIS_HOST=your_redis_host
 REDIS_PASSWORD=your_redis_password
 WEATHER_API_KEY=your_weather_api_key
+```
 
 Replace `your_redis_host`, `your_redis_password`, and `your_weather_api_key` with the actual values for your Redis instance and Visual Crossing Weather API key. This ensures the application can connect to Redis and access the weather API.
 
@@ -51,7 +52,8 @@ Replace `your_redis_host`, `your_redis_password`, and `your_weather_api_key` wit
 To start the Flask application, run:
 
 ```bash
-python <your_script_name>.py
+python main.py
+```
 
 The application will start on `http://127.0.0.1:5000` by default.
 
@@ -66,6 +68,7 @@ The application will start on `http://127.0.0.1:5000` by default.
 
 ```bash
 curl http://127.0.0.1:5000/{Location}/{From_Date}
+```
 
 ### 📥 Response
 
@@ -73,13 +76,13 @@ The endpoint will return the weather data in JSON format. Here’s what you can 
 
 - **Successful Response (200)**: Returns the weather data for the specified location and date. This data is cached in Redis for 12 hours (43200 seconds) to improve performance for subsequent requests to the same location.
 - **Rate Limit Exceeded (429)**: If the rate limit is exceeded, a `429 Too Many Requests` error is returned with an error message: 
-    ```json
+    ```
     {
       "Error": "Too Many Requests"
     }
     ```
 - **Server Error (500 or 503)**: If the weather API is unavailable or encounters an error, the response will include an error message:
-    ```json
+    ```
     {
       "Error": "Server Error"
     }
